@@ -1,7 +1,10 @@
 const express = require('express')
+const cors = require('cors')
+
 const app = express()
 const logger = require('./loggerMiddleware')
 
+app.use(cors())
 app.use(logger)
  
 let notes = [
@@ -24,12 +27,6 @@ let notes = [
     important: true
   }
 ]
-
-//node js vanilla
-// const app = http.createServer((request, response) => {
-//   response.writeHead(200, { 'Content-Type': 'application/json' })
-//   response.end(JSON.stringify(notes))
-// })
 
 app.get('/', (request, response) => {
   response.send('<h1>Hola<h1/>')
