@@ -2,10 +2,13 @@ const express = require('express')
 const cors = require('cors')
 
 const app = express()
+app.use(express.json())
+
 const logger = require('./loggerMiddleware')
 
 app.use(cors())
 app.use(logger)
+//devuelve la request.body, la informacion que se le pasa al servicio
  
 let notes = [
   {
@@ -51,14 +54,8 @@ app.delete('/api/notes/:id', (request, response) => {
   response.status(204).end()
 })
 
-app.post('/api/notes/', (request, response) =>{
+app.post('/api/notes', (request, response) =>{
   const note = request.body
-
-  if(!note || !note.content) {
-    return response.status(400).json({
-      error: 'note.content is missing'
-    })
-  }
 
   const Ids = notes.map(note => note.id)
   const maxId = Math.max(...Ids)
